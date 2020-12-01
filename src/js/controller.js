@@ -113,6 +113,6 @@ const init = function () {
   paginationView.addHandlerClick(controlPagination);
   // addRecipeView.addHandlerUpload(controlUpload);
 
-  // controlServing();
+  controlServing();
 };
 init();
