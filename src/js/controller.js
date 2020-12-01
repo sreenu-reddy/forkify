@@ -4,6 +4,7 @@ import searchView from './views/searchView.js';
 import resultsView from './views/resultsView.js';
 import BookmarkView from './views/bookmarksView';
 import paginationView from './views/pagination.js';
+// import addRecipeView from './views/addRecipeView';
 
 // polyfilling
 import 'core-js/stable';
@@ -94,6 +95,15 @@ const controlAddBookmark = function () {
 const controlBookmarks = function () {
   bookmarksView.render(model.state.bookmarks);
 };
+
+// const controlUpload = async function (newRecipe) {
+//   try {
+//     await model.UploadRecipe(newRecipe);
+//   } catch (err) {
+//     addRecipeView.renderError(err.message);
+//   }
+// };
+
 const init = function () {
   bookmarksView.addhandlerBookmarks(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes);
@@ -101,6 +111,7 @@ const init = function () {
   recipeView.addHandlerBookmark(controlAddBookmark);
   searchView.addHandlerSearch(controlSearchResults);
   paginationView.addHandlerClick(controlPagination);
+  // addRecipeView.addHandlerUpload(controlUpload);
 
   // controlServing();
 };

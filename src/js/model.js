@@ -1,6 +1,6 @@
 import { async } from 'regenerator-runtime';
 import { API_URl, RES_PER_PAGE } from './config.js';
-import { getJSON } from './helper.js';
+import { getJSON, sendJSON } from './helper.js';
 export const state = {
   recipe: {},
   search: {
@@ -96,6 +96,34 @@ export const deleteBookmark = function (id) {
   if (id === state.recipe.id) state.recipe.bookmarked = false;
 
   addLocalStorage();
+};
+
+export const UploadRecipe = async function (newRecipe) {
+  try {
+    const ingredients = Object.entries(newRecipe)
+      .filter(entry => entry[0].startsWith('ingredient') && entry[1] !== '')
+      .map(ing => {
+        const ingArr = ing[1].replaceAll(' ', '').split(',');
+        if (ingArr.length !== 3)
+          throw new Error(
+            `Wrong ingredients format! please use correct ingredient format:)`
+          );
+        const [quantity, price, description] = ingArr;
+        return { quantity: quantity ? +quantity : null, price, description };
+      });
+    const recipe = {
+      title: newRecipe.title,
+      source_url: newRecipe.sourceUrl,
+      image_url: newRecipe.image,
+      publisher: newRecipe.publisher,
+      cooking_time: newRecipe.cookingtime,
+      servings: newRecipe.servings,
+      ingredients,
+    };
+    console.log(recipe);
+  } catch (err) {
+    throw err;
+  }
 };
 
 const init = function () {
